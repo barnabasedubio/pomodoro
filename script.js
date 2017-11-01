@@ -29,37 +29,39 @@ function notificationPermission() {
 
 function pomodoroMain() {
 
-    // retrieve necessary buttons
-    let descButton            = document.getElementsByClassName("page-description"),
+    // initialize necessary buttons
+    let descButton      = document.getElementsByClassName("page-description"),
         letsGoButton    = document.getElementById("lets_go"),
-        workDescription = document.getElementById("work_description"),
-        pauseButton     = document.getElementById("pause_resume"),
-        resetButton     = document.getElementById("reset");
+        workDescription = document.getElementById("work_description");
 
-    // remove main heading description
-    Array.from(descButton).forEach(function(el) {
-        $(el).animate({"opacity": "0.1"}, 400, function(){
+    // remove "maximize work output text"
+    $(descButton).animate({"opacity": "0"}, 200, function(){
+        // remove "get started" button   -- 1.
+        $(letsGoButton).animate({"opacity": ""}, 200, function() {
             this.style.display = "none";
+            this.style.display = "none";
+            // remove "Pomodoro Timer" heading and replace with time
+            $("#main_text").animate({"opacity": "0"}, 300, function () {
+                this.textContent = "25:00";
+            }).animate({"opacity": "1", "bottom": "3rem"}, 300, function() {
+                // activate cycles button
+                $("#pomodoros_text").css({
+                    "display": "block",
+                    "bottom": "6rem"
+                }).animate({"opacity": "1"}, 100, function () {
+                    // activate pomodoro settings button
+                    $(".settings").css({
+                        "display": "inline-block",
+                        "bottom" : "3rem"
+                    }).animate({"opacity": "1"}, 100, function () {
+                        // display "get work done" above timer
+                        $(workDescription).animate({"opacity": "1"}, 900);
+                    });
+                });
+            });
         });
     });
 
-    $(letsGoButton).animate({"opacity": ""}, 350, function() {
-        this.style.display = "none";
-    });
-
-    // remove "Pomodoro Timer" heading and replace with time
-    $("#main_text").animate({"opacity": "0"}, 400, function () {
-        this.textContent = "25:00";
-    }).animate({"opacity": "1", "bottom": "3rem"}, 400);
-
-    // display "get work done" above timer
-    $(workDescription).animate({"opacity": "1"}, 1000);
-
-    // activate pomodoro settings button
-    $(".settings").css({
-        "display": "inline-block",
-        "bottom" : "3rem"
-    }).animate({"opacity": "1"}, 500);
 
 
 }
