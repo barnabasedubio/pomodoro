@@ -1,3 +1,4 @@
+
 html {
     height: 100%;
     background: linear-gradient(to bottom, #F3E1C8, #BB4646);
@@ -18,8 +19,17 @@ h3 {
     text-align: center;
 }
 
+#work_description {
+    opacity: 0;
+    color: #FF6363;
+}
+
+#main_text {
+    position: relative;
+}
+
 .page-description {
-    /*border: 1px solid orange;*/
+    border: 1px solid green;
     position: relative;
     bottom: 3rem;
 }
@@ -29,18 +39,27 @@ h3 {
     transition-duration: 0.4s;
     font: 2rem "Microsoft Yi Baiti", sans-serif;
     color: #985A5A;
+    background-color: inherit;
+    width: 11rem;
+    height: 3rem;
+    border: 0.2rem solid #FF6363;
+    border-radius: 10rem;
+    padding-bottom: 0.4rem;
 }
-
 .button:hover {
     color: #DDD;
     background: rgba(255, 99, 99, 0.5);
 }
 
-.lets-go {
-    width: 11rem;
-    height: 3rem;
-    background-color: inherit;
-    border: 0.2rem solid #FF6363;
-    border-radius: 10rem;
-    padding-bottom: 0.4rem;
+
+.settings {
+    position: relative;
+    display: none;
+    margin: 0 3rem;
+    border: none;
+    opacity: 0;
+}
+
+#cycles_text {
+    display: none; /*change to inline-block when active */
 }
