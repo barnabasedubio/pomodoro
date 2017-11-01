@@ -29,7 +29,6 @@ h3 {
 }
 
 .page-description {
-    border: 1px solid green;
     position: relative;
     bottom: 3rem;
 }
@@ -55,11 +54,14 @@ h3 {
 .settings {
     position: relative;
     display: none;
-    margin: 0 3rem;
+    margin: 0 2rem;
     border: none;
     opacity: 0;
 }
 
-#cycles_text {
+#pomodoros_text {
+    color: #FF6363;
+    position: relative;
+    opacity: 0;
     display: none; /*change to inline-block when active */
 }
