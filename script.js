@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
         togglePomodoro = document.getElementById("pause_resume");
 
     // pomodoro variables
-    let pomodoroLength = 15,
-        breakLength = 3,
-        longBreakLength = 9;
+    let pomodoroLength = 1500,
+        breakLength = 300,
+        longBreakLength = 900;
 
     let pomodoroArray = [pomodoroLength, breakLength,
         pomodoroLength, breakLength,
@@ -36,8 +36,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // countdown information
     let countdownInterval;
-    let isRunning = false;
+    let isRunning = false,
+        initial = true;
 
+    // animations
     function renderPage() {
         // animations
         $(descButton).animate({"opacity": "0"}, 200, function(){
@@ -58,10 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         $(".settings").css({
                             "display": "inline-block",
                             "bottom" : "3rem"
-                        }).animate({"opacity": "1"}, 100, function () {
-                            // display "get work done" above timer
-                            $(workDescription).animate({"opacity": "1"}, 300);
-                        });
+                        }).animate({"opacity": "1"}, 100);
                     });
                 });
             });
@@ -70,25 +69,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     togglePomodoro.addEventListener("click", function () {
         if (!isRunning) {
+            $(workDescription).animate({"opacity": "1"}, 300);
+            if (initial) {
+                renderTime(convertToMinutes(--timeLeft));
+                timeLeft--;
+                initial = false;
+            }
             changeButtonText(this);
-            createInterval(true);
+            runPomodoro(true);
             isRunning = true;
         } else {
             changeButtonText(this);
-            createInterval(false);
+            runPomodoro(false);
             isRunning = false;
         }
     });
 
-    function createInterval(flag) {
+    function runPomodoro(flag) {
         if (flag) {
             countdownInterval = setInterval(function () {
                 renderTime(convertToMinutes(timeLeft));
-                if (timeLeft === 0) clearInterval(countdownInterval);
-                timeLeft--;
+                if (--timeLeft === 0) {
+                    clearInterval(countdownInterval);
+                }
             }, 1000)
         } else {
-            clearInterval(countdownInterval)
+            clearInterval(countdownInterval);
         }
     }
 
