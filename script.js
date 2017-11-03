@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let descButton       = document.getElementsByClassName("page-description"),
         workDescription  = document.getElementById("work_description"),
-        togglePomodoro = document.getElementById("pause_resume");
+        togglePomodoro = document.getElementById("pause_resume"),
+        resetPomodoro = document.getElementById("reset");
 
     // pomodoro variables
     let pomodoroLength = 1500,
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     togglePomodoro.addEventListener("click", function () {
         if (!isRunning) {
             $(workDescription).animate({"opacity": "1"}, 300);
-            if (initial) {
+            if (timeLeft === pomodoroArray[pomodoroArrayIndex % pomodoroArray.length]) {
                 renderTime(convertToMinutes(--timeLeft));
                 timeLeft--;
                 initial = false;
@@ -83,6 +84,11 @@ document.addEventListener('DOMContentLoaded', function () {
             runPomodoro(false);
             isRunning = false;
         }
+    });
+
+    resetPomodoro.addEventListener("click", function () {
+        timeLeft = pomodoroArray[pomodoroArrayIndex % pomodoroArray.length];
+        renderTime(convertToMinutes(timeLeft));
     });
 
     function runPomodoro(flag) {
