@@ -22,6 +22,8 @@ h3 {
 #work_description {
     opacity: 0;
     color: #FF6363;
+    position: relative;
+    bottom: 7rem;
 }
 
 #main_text {
