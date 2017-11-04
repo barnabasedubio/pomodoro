@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let descButton       = document.getElementsByClassName("page-description"),
         workDescription  = document.getElementById("work_description"),
         togglePomodoro = document.getElementById("pause_resume"),
-        resetPomodoro = document.getElementById("reset");
+        resetPomodoro = document.getElementById("reset"),
+        settingsButton = document.getElementById("general_settings");
 
     // pomodoro variables
     let pomodoroLength = 1500,
@@ -51,16 +52,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 // remove "Pomodoro Timer" heading and replace with time
                 $("#main_text").animate({"opacity": "0"}, 300, function () {
                     this.textContent = "25:00";
-                }).animate({"opacity": "1", "bottom": "3rem"}, 300, function() {
+                }).animate({"opacity": "1", "bottom": "10rem"}, 300, function() {
                     // activate cycles button
                     $("#pomodoros_text").css({
                         "display": "block",
-                        "bottom": "6rem"
+                        "bottom": "13rem"
                     }).animate({"opacity": "1"}, 100, function () {
                         // activate pomodoro settings button
                         $(".settings").css({
                             "display": "inline-block",
-                            "bottom" : "3rem"
+                            "bottom" : "10rem"
                         }).animate({"opacity": "1"}, 100);
                     });
                 });
@@ -89,7 +90,22 @@ document.addEventListener('DOMContentLoaded', function () {
     resetPomodoro.addEventListener("click", function () {
         timeLeft = pomodoroArray[pomodoroArrayIndex % pomodoroArray.length];
         renderTime(convertToMinutes(timeLeft));
+        if (isRunning) {
+            runPomodoro(false);
+            isRunning = false;
+        }
+        togglePomodoro.textContent = "start";
     });
+
+    settingsButton.addEventListener("click", function() {
+        // pause the timer
+        if (isRunning) {
+            runPomodoro(false);
+            isRunning = false;
+        }
+        // open settings box
+    });
+
 
     function runPomodoro(flag) {
         if (flag) {
