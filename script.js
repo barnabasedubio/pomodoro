@@ -17,11 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (Notification.permission === "denied") alert ("This page currently only works with notifications on.");
     });
 
-    let descButton       = document.getElementsByClassName("page-description"),
+    let descriptionText       = document.getElementsByClassName("page-description"),
         workDescription  = document.getElementById("work_description"),
         togglePomodoro = document.getElementById("pause_resume"),
         resetPomodoro = document.getElementById("reset"),
-        settingsButton = document.getElementById("general_settings");
+        settingsButton = document.getElementById("general_settings"),
+        settingsBox = document.getElementById("pomodoro_settings");
 
     // pomodoro variables
     let pomodoroLength = 1500,
@@ -44,10 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // animations
     function renderPage() {
         // animations
-        $(descButton).animate({"opacity": "0"}, 200, function(){
+        $(descriptionText).animate({"opacity": "0"}, 200, function(){
             // remove "get started" button.
-            $(letsGoButton).animate({"opacity": ""}, 200, function() {
-                this.style.display = "none";
+            $(letsGoButton).animate({"opacity": "0"}, 200, function() {
                 this.style.display = "none";
                 // remove "Pomodoro Timer" heading and replace with time
                 $("#main_text").animate({"opacity": "0"}, 300, function () {
@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
             runPomodoro(true);
             isRunning = true;
         } else {
+            $(workDescription).animate({"opacity": "0"}, 300);
             changeButtonText(this);
             runPomodoro(false);
             isRunning = false;
@@ -88,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     resetPomodoro.addEventListener("click", function () {
+        $(workDescription).animate({"opacity": "0"}, 300);
         timeLeft = pomodoroArray[pomodoroArrayIndex % pomodoroArray.length];
         renderTime(convertToMinutes(timeLeft));
         if (isRunning) {
@@ -103,7 +105,14 @@ document.addEventListener('DOMContentLoaded', function () {
             runPomodoro(false);
             isRunning = false;
         }
-        // open settings box
+        // remove "start" and "reset"
+        let timerSettings = document.getElementsByClassName("timer-settings");
+        $(timerSettings).animate({"opacity": "0"}, 300, function () {
+            this.style.visibility = "hidden";
+        });
+        $(".settings").animate({"top": "10rem"}, 500/*).animate({"opacity": "1"}, 300*/, function () {
+            settingsBox.style.visibility = "visible";
+        });
     });
 
 
