@@ -61,6 +61,16 @@ h3 {
     opacity: 0;
 }
 
+.settings-box {
+    border: 1px solid rebeccapurple;
+    height: 20rem;
+    width: 25rem;
+    position: relative;
+    margin: 0 auto;
+    bottom: 20rem;
+    visibility: hidden;
+}
+
 #pomodoros_text {
     color: #FF6363;
     position: relative;
