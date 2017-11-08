@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         workDescription  = document.getElementById("work_description"),
         togglePomodoro = document.getElementById("pause_resume"),
         resetPomodoro = document.getElementById("reset"),
+        pomodoroSettings = document.getElementsByClassName("settings"),
         settingsButton = document.getElementById("general_settings"),
         settingsBox = document.getElementById("pomodoro_settings");
 
@@ -102,16 +103,15 @@ document.addEventListener('DOMContentLoaded', function () {
     settingsButton.addEventListener("click", function() {
         // pause the timer
         if (isRunning) {
+            $(workDescription).animate({"opacity": "0"}, 300);
             runPomodoro(false);
             isRunning = false;
         }
-        // remove "start" and "reset"
-        let timerSettings = document.getElementsByClassName("timer-settings");
-        $(timerSettings).animate({"opacity": "0"}, 300, function () {
-            this.style.visibility = "hidden";
-        });
-        $(".settings").animate({"top": "10rem"}, 500/*).animate({"opacity": "1"}, 300*/, function () {
+        $(pomodoroSettings).animate({"opacity": "0"}, 100, function () {
             settingsBox.style.visibility = "visible";
+            $(settingsBox).animate({"opacity": 1}, 100, function () {
+                $(".button-okay").animate({"opacity": "1"}, 50);
+            });
         });
     });
 
