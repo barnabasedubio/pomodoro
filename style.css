@@ -61,6 +61,15 @@ h3 {
     opacity: 0;
 }
 
+.button-okay {
+    margin: auto;
+    position: relative;
+    bottom: 19rem;
+    display: block;
+    border: none;
+    opacity: 0;
+}
+
 .settings-box {
     border: 1px solid rebeccapurple;
     height: 20rem;
@@ -69,6 +78,7 @@ h3 {
     margin: 0 auto;
     bottom: 20rem;
     visibility: hidden;
+    opacity: 0;
 }
 
 #pomodoros_text {
