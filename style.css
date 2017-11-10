@@ -118,6 +118,7 @@ p, .after-text {
     font: 3rem "Microsoft Yi Baiti", sans-serif;
     color: #985A5A;
     padding-bottom: 2rem;
+    cursor: pointer;
 }
 
 .minus {
