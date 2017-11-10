@@ -5,12 +5,24 @@ html {
 }
 
 h1 {
-    font: 5rem "Tw Cen MT", sans-serif;
+     font: 5rem "Tw Cen MT", sans-serif;
+     color: #FF6363;
+     background: inherit;
+ }
+
+h2 {
+    font: 4rem "Tw Cen MT", sans-serif;
     color: #FF6363;
+    background: inherit;
 }
 
 h3 {
     font: 2rem "Microsoft Yi Baiti", sans-serif;
+    color: #985A5A;
+}
+
+p, .after-text {
+    font: 1.5rem "Microsoft Yi Baiti", sans-serif;
     color: #985A5A;
 }
 
@@ -71,7 +83,6 @@ h3 {
 }
 
 .settings-box {
-    border: 1px solid rebeccapurple;
     height: 20rem;
     width: 25rem;
     position: relative;
@@ -79,6 +90,57 @@ h3 {
     bottom: 20rem;
     visibility: hidden;
     opacity: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-time {
+    width: 60%;
+    /*border: 1px dashed blue;*/
+    position: absolute;
+    top: -1rem;
+    left: 1.75rem;
+}
+
+.box {
+    /*border: 1px solid red;*/
+    height: 9rem;
+    width: 9rem;
+    position: relative;
+}
+
+.plus, .minus {
+    width: 2rem;
+    height: 2rem;
+    /*border: 1px solid teal;*/
+    font: 3rem "Microsoft Yi Baiti", sans-serif;
+    color: #985A5A;
+    padding-bottom: 2rem;
+}
+
+.minus {
+    position: relative;
+    top: 2.5rem;
+}
+
+.plus {
+    float: right;
+    position: relative;
+    top: -1.7rem;
+}
+
+.box p {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.after-text {
+    position: relative;
+    bottom: 3.67rem;
 }
 
 #pomodoros_text {
