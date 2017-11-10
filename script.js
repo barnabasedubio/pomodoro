@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
             isRunning = false;
         }
         $(pomodoroSettings).animate({"opacity": "0"}, 100, function () {
+            this.style.visibility = "hidden";
             settingsBox.style.visibility = "visible";
             $(settingsBox).animate({"opacity": 1}, 100, function () {
                 $(".button-okay").animate({"opacity": "1"}, 50);
