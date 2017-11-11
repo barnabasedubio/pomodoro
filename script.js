@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
         resetPomodoro = document.getElementById("reset"),
         pomodoroSettings = document.getElementsByClassName("settings"),
         settingsButton = document.getElementById("general_settings"),
-        settingsBox = document.getElementById("pomodoro_settings");
+        settingsBox = document.getElementById("pomodoro_settings"),
+        okayButton = document.getElementById("okay");
 
     // pomodoro variables
     let pomodoroLength = 1500,
@@ -110,8 +111,24 @@ document.addEventListener('DOMContentLoaded', function () {
         $(pomodoroSettings).animate({"opacity": "0"}, 100, function () {
             this.style.visibility = "hidden";
             settingsBox.style.visibility = "visible";
-            $(settingsBox).animate({"opacity": 1}, 100, function () {
-                $(".button-okay").animate({"opacity": "1"}, 50);
+            $(settingsBox).animate({"opacity": "1"}, 100, function () {
+                $(".button-okay").css({"visibility": "visible"}).animate({"opacity": "1"}, 50);
+            });
+        });
+    });
+
+    okayButton.addEventListener("click", function () {
+        // TODO: Update pomodori lengths
+
+        // go back to pause menu
+        $(this).animate({"opacity": "0"}, 50, function () {
+            this.style.visibility = "hidden";
+            $(settingsBox).animate({"opacity": "0"}, 100, function () {
+                this.style.visibility = "hidden";
+                if (timeLeft !== pomodoroArray[pomodoroArrayIndex % pomodoroArray.length]) {
+                    if (togglePomodoro.textContent !== "resume") changeButtonText(togglePomodoro);
+                }
+                $(pomodoroSettings).css({"visibility": "visible"}).animate({"opacity": "1"}, 100);
             });
         });
     });
