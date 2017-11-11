@@ -17,14 +17,18 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (Notification.permission === "denied") alert ("This page currently only works with notifications on.");
     });
 
-    let descriptionText       = document.getElementsByClassName("page-description"),
-        workDescription  = document.getElementById("work_description"),
-        togglePomodoro = document.getElementById("pause_resume"),
-        resetPomodoro = document.getElementById("reset"),
-        pomodoroSettings = document.getElementsByClassName("settings"),
-        settingsButton = document.getElementById("general_settings"),
-        settingsBox = document.getElementById("pomodoro_settings"),
-        okayButton = document.getElementById("okay");
+    let descriptionText    = document.getElementsByClassName("page-description"),
+        pomodoroSettings   = document.getElementsByClassName("settings"),
+        plusButton         = document.getElementsByClassName("plus-button"),
+        minusButton        = document.getElementsByClassName("minus-button"),
+
+        workDescription    = document.getElementById("work_description"),
+        togglePomodoro     = document.getElementById("pause_resume"),
+        resetPomodoro      = document.getElementById("reset"),
+        settingsButton     = document.getElementById("general_settings"),
+        settingsBox        = document.getElementById("pomodoro_settings"),
+        okayButton         = document.getElementById("okay");
+
 
     // pomodoro variables
     let pomodoroLength = 1500,
@@ -114,6 +118,19 @@ document.addEventListener('DOMContentLoaded', function () {
             $(settingsBox).animate({"opacity": "1"}, 100, function () {
                 $(".button-okay").css({"visibility": "visible"}).animate({"opacity": "1"}, 50);
             });
+        });
+    });
+
+    Array.prototype.forEach.call(plusButton, function (el, i) {
+        el.addEventListener("click", function () {
+            console.log(el.parentNode.childNodes);
+            el.parentNode.childNodes[7].textContent = (parseInt(el.parentNode.childNodes[7].textContent) + 1).toString();
+        });
+    });
+
+    Array.prototype.forEach.call(minusButton, function (el, i) {
+        el.addEventListener("click", function () {
+            el.parentNode.childNodes[7].textContent = (parseInt(el.parentNode.childNodes[7].textContent) - 1).toString();
         });
     });
 
