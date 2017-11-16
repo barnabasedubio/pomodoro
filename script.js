@@ -9,9 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // ask user for permission
             Notification.requestPermission(function(permission) {
                 if (permission === "granted") {
-                    let notification = new Notification("Pomodoro Timer:",
-                        {body: "Great, Notifications are enabled."});
-                    setTimeout(notification.close.bind(notification), 5000);
+                    generateNotification("Great, Notifications are enabled.");
                     renderPage();
                 }
             });
@@ -31,29 +29,24 @@ document.addEventListener('DOMContentLoaded', function () {
         okayButton         = document.getElementById("okay");
 
 
+    // pomodoro-flags
+    let tookBreak = false, // tookBreak true means currently in a break
+        pomodoroTimeChanged = false,
+        breakTimeChanged = false;
+
     // pomodoro variables
     let pomodoroLength = 15,
         shortBreakLength = 3,
         longBreakLength = 9,
         currentPomodoriCount = 0,
-        pomodoriCycleCount = 4,
-        tookBreak = false;
+        pomodoriCycleCount = 4;
 
-    // function generatePomodoroArray ()
+    let timeLeft = pomodoroLength;
 
-
-    let pomodoroArray = [pomodoroLength, shortBreakLength,
-        pomodoroLength, shortBreakLength,
-        pomodoroLength, shortBreakLength,
-        pomodoroLength, longBreakLength];
-
-    let pomodoroArrayIndex = 0;
-    let timeLeft = pomodoroArray[pomodoroArrayIndex % pomodoroArray.length];
 
     // countdown information
     let countdownInterval,
-        isRunning = false,
-        initial = true;
+        isRunning = false;
 
     // animations
     function renderPage() {
@@ -85,11 +78,12 @@ document.addEventListener('DOMContentLoaded', function () {
     togglePomodoro.addEventListener("click", function () {
         if (!isRunning) {
             $(workDescription).animate({"opacity": "1"}, 300);
-            if (timeLeft === pomodoroArray[pomodoroArrayIndex % pomodoroArray.length]) {
+            if (timeLeft === pomodoroLength || timeLeft === shortBreakLength || timeLeft === longBreakLength) {
                 renderTime(convertToMinutes(--timeLeft));
-                timeLeft--;
-                initial = false;
+            } else {
+                renderTime(convertToMinutes(timeLeft));
             }
+            timeLeft--;
             changeButtonText(this);
             runPomodoro(true);
             isRunning = true;
@@ -148,28 +142,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
     okayButton.addEventListener("click", function () {
         // update pomodori lengths (ONLY IF A CHANGE HAS BEEN MADE)
-        pomodoroLength     = parseInt(document.getElementById("pomodoro_length").textContent) * 60;
-        shortBreakLength   = parseInt(document.getElementById("short_break_length").textContent) * 60;
-        longBreakLength    = parseInt(document.getElementById("long_break_length").textContent) * 60;
-        pomodoriCycleCount = parseInt(document.getElementById("pomodoro_cycle_length").textContent);
-        if (tookBreak) {
-            timeLeft = (currentPomodoriCount % pomodoriCycleCount === 0) ? longBreakLength : shortBreakLength;
-            renderTime(convertToMinutes(timeLeft));
-        } else {
-            timeLeft = pomodoroLength;
-            renderTime(convertToMinutes(timeLeft));
+        if (parseInt(document.getElementById("pomodoro_length").textContent) * 60 !== pomodoroLength) {
+            pomodoroLength = parseInt(document.getElementById("pomodoro_length").textContent) * 60;
+            pomodoroTimeChanged = true;
         }
+        if (parseInt(document.getElementById("short_break_length").textContent) * 60 !== shortBreakLength) {
+            shortBreakLength = parseInt(document.getElementById("short_break_length").textContent) * 60;
+            breakTimeChanged = true;
+        }
+        if (parseInt(document.getElementById("long_break_length").textContent) * 60 !== longBreakLength) {
+            longBreakLength  = parseInt(document.getElementById("long_break_length").textContent) * 60;
+            breakTimeChanged = true;
+        }
+        if (parseInt(document.getElementById("pomodoro_cycle_length").textContent) !== pomodoriCycleCount) {
+            pomodoriCycleCount = parseInt(document.getElementById("pomodoro_cycle_length").textContent);
+        }
+
+        if (tookBreak) {
+            // if break time has been changed during break, reset timer with new time
+            timeLeft = (breakTimeChanged) ? (currentPomodoriCount % pomodoriCycleCount === 0) ? longBreakLength : shortBreakLength : timeLeft;
+        } else {
+            // if pomodoro time has been changed during pomodoro, reset timer with new time
+            timeLeft = (pomodoroTimeChanged) ? pomodoroLength: timeLeft;
+        }
+        // to account for the way setInterval works
+        if (!isRunning) {
+            if (tookBreak && (timeLeft === shortBreakLength || timeLeft !== longBreakLength)) {
+                timeLeft++;
+            } else if (!tookBreak && timeLeft !== pomodoroLength) timeLeft++;
+        }
+        renderTime(convertToMinutes(timeLeft));
+
         // go back to pause menu
         $(this).animate({"opacity": "0"}, 50, function () {
             this.style.visibility = "hidden";
             $(settingsBox).animate({"opacity": "0"}, 100, function () {
                 this.style.visibility = "hidden";
-                if (timeLeft !== pomodoroArray[pomodoroArrayIndex % pomodoroArray.length]) {
+                if ((tookBreak && breakTimeChanged) || (tookBreak && (timeLeft === longBreakLength || timeLeft === shortBreakLength)) ||
+                    (!tookBreak && pomodoroTimeChanged) || (!tookBreak && timeLeft === pomodoroLength))  {
                     togglePomodoro.textContent = "start";
                 }
+                else togglePomodoro.textContent = "resume";
                 $(pomodoroSettings).css({"visibility": "visible"}).animate({"opacity": "1"}, 100);
             });
         });
+        // resetting flags (for future changes)
+        pomodoroTimeChanged = false;
+        breakTimeChanged = false;
     });
 
     function runPomodoro(flag) {
@@ -210,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
             timeLeft = pomodoroLength;
             tookBreak = false;
         }
+        timeLeft--;
         runPomodoro(true);
     }
 
@@ -217,10 +237,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function generateNotification(text) {
     if (Notification.permission === "granted") {
-        let notification = new Notification("Pomodoro Timer:", {body: text});
+        let notification = new Notification("Pomodoro Timer:", {body: text, icon: "http://res.cloudinary.com/detqxj5bf/image/upload/v1510792916/pomodoro/mini-tomato.png"});
         notification.onclick = function(event) {
             window.focus();
-            this.cancel()
+            notification.close();
         };
         setTimeout(notification.close.bind(notification), 5000);
     }
