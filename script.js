@@ -1,9 +1,12 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     let letsGoButton = document.getElementById("lets_go");
-
+    // handling for notification access
     letsGoButton.addEventListener("click", function () {
-        if (!("Notification" in window)) alert ("This browser does not support notifications :/");
+        if (!("Notification" in window)) {
+            alert ("This browser does not support notifications :/");
+            renderPage();
+        }
         else if (Notification.permission === "granted") renderPage();
         else if (Notification.permission !== "denied" || Notification.permission === "default") {
             // ask user for permission
@@ -13,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     renderPage();
                 }
             });
-        } else if (Notification.permission === "denied") alert ("This page currently only works with notifications on.");
+        } else if (Notification.permission === "denied") renderPage();
     });
 
     let descriptionText    = document.getElementsByClassName("page-description"),
@@ -39,10 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
         shortBreakLength = 300,
         longBreakLength = 900,
         currentPomodoriCount = 0,
-        pomodoriCycleCount = 4;
-
-    let timeLeft = pomodoroLength;
-
+        pomodoriCycleCount = 4,
+        timeLeft = pomodoroLength;
 
     // countdown information
     let countdownInterval,
@@ -79,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isRunning) {
             $(workDescription).animate({"opacity": "1"}, 300);
             if (timeLeft === pomodoroLength || timeLeft === shortBreakLength || timeLeft === longBreakLength) {
+                // instant update when starting the pomodoro section (instead of waiting 1 second i.e. when resuming)
                 renderTime(convertToMinutes(--timeLeft));
             } else {
                 renderTime(convertToMinutes(timeLeft));
@@ -235,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+// create a notification with given body text
 function generateNotification(text) {
     if (Notification.permission === "granted") {
         let notification = new Notification("Pomodoro Timer:", {body: text, icon: "http://res.cloudinary.com/detqxj5bf/image/upload/v1510792916/pomodoro/mini-tomato.png"});
@@ -245,7 +248,6 @@ function generateNotification(text) {
         setTimeout(notification.close.bind(notification), 5000);
     }
 }
-
 // change pause_resume button to apt text
 function changeButtonText(button) {
     if (button.textContent === "start") button.textContent = "pause";
