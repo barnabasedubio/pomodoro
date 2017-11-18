@@ -19,34 +19,30 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (Notification.permission === "denied") renderPage();
     });
 
-    let descriptionText    = document.getElementsByClassName("page-description"),
-        pomodoroSettings   = document.getElementsByClassName("settings"),
-        plusButton         = document.getElementsByClassName("plus-button"),
-        minusButton        = document.getElementsByClassName("minus-button"),
-
-        workDescription    = document.getElementById("work_description"),
-        togglePomodoro     = document.getElementById("pause_resume"),
-        resetPomodoro      = document.getElementById("reset"),
-        settingsButton     = document.getElementById("general_settings"),
-        settingsBox        = document.getElementById("pomodoro_settings"),
-        okayButton         = document.getElementById("okay");
-
-
+    // DOM-Elements
+    let descriptionText     = document.getElementsByClassName("page-description"),
+        pomodoroSettings    = document.getElementsByClassName("settings"),
+        plusButton          = document.getElementsByClassName("plus-button"),
+        minusButton         = document.getElementsByClassName("minus-button"),
+        workDescription     = document.getElementById("work_description"),
+        togglePomodoro      = document.getElementById("pause_resume"),
+        resetPomodoro       = document.getElementById("reset"),
+        settingsButton      = document.getElementById("general_settings"),
+        settingsBox         = document.getElementById("pomodoro_settings"),
+        okayButton          = document.getElementById("okay"),
     // pomodoro-flags
-    let tookBreak = false, // tookBreak true means currently in a break
-        pomodoroTimeChanged = false,
-        breakTimeChanged = false;
-
+        tookBreak            = false, // tookBreak == true -> currently in a break
+        pomodoroTimeChanged  = false,
+        breakTimeChanged     = false,
     // pomodoro variables
-    let pomodoroLength = 1500,
-        shortBreakLength = 300,
-        longBreakLength = 900,
+        pomodoroLength       = 1500,
+        shortBreakLength     = 300,
+        longBreakLength      = 900,
         currentPomodoriCount = 0,
-        pomodoriCycleCount = 4,
-        timeLeft = pomodoroLength;
-
+        pomodoriCycleCount   = 4,
+        timeLeft             = pomodoroLength,
     // countdown information
-    let countdownInterval,
+        countdownInterval,
         isRunning = false;
 
     // animations
@@ -61,15 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     this.textContent = convertToMinutes(pomodoroLength);
                 }).animate({"opacity": "1", "bottom": "10rem"}, 300, function() {
                     // activate cycles button
-                    $("#pomodoros_text").css({
-                        "display": "block",
-                        "bottom": "13rem"
-                    }).animate({"opacity": "1"}, 100, function () {
+                    $("#pomodoros_text").css({"display": "block", "bottom": "13rem"}).animate({"opacity": "1"}, 100, function () {
                         // activate pomodoro settings button
-                        $(".settings").css({
-                            "display": "inline-block",
-                            "bottom" : "10rem"
-                        }).animate({"opacity": "1"}, 100);
+                        $(".settings").css({"display": "inline-block", "bottom" : "10rem"}).animate({"opacity": "1"}, 100);
                     });
                 });
             });
@@ -82,32 +72,28 @@ document.addEventListener('DOMContentLoaded', function () {
             if (timeLeft === pomodoroLength || timeLeft === shortBreakLength || timeLeft === longBreakLength) {
                 // instant update when starting the pomodoro section (instead of waiting 1 second i.e. when resuming)
                 renderTime(convertToMinutes(--timeLeft));
-            } else {
-                renderTime(convertToMinutes(timeLeft));
-            }
+            } else renderTime(convertToMinutes(timeLeft));
             timeLeft--;
-            changeButtonText(this);
-            runPomodoro(true);
             isRunning = true;
         } else {
             $(workDescription).animate({"opacity": "0"}, 300);
-            changeButtonText(this);
-            runPomodoro(false);
             isRunning = false;
         }
+        // clicking the toggle will always change the text, as well as pause or resume the timer
+        changeButtonText(this);
+        runPomodoro(isRunning);
     });
 
     resetPomodoro.addEventListener("click", function () {
         $(workDescription).animate({"opacity": "0"}, 300);
         if (isRunning) {
-            runPomodoro(false);
             isRunning = false;
+            runPomodoro(isRunning);
         }
-        if (tookBreak) {
-            timeLeft = (currentPomodoriCount % pomodoriCycleCount === 0) ? longBreakLength : shortBreakLength;
-        } else {
-            timeLeft = pomodoroLength;
-        }
+        // either reset short break or long break, depending on the type one currently is on
+        if (tookBreak) timeLeft = (currentPomodoriCount % pomodoriCycleCount === 0) ? longBreakLength : shortBreakLength;
+        else timeLeft = pomodoroLength;
+        // these will always happen
         renderTime(convertToMinutes(timeLeft));
         togglePomodoro.textContent = "start";
     });
@@ -116,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // pause the timer
         if (isRunning) {
             $(workDescription).animate({"opacity": "0"}, 300);
-            runPomodoro(false);
             isRunning = false;
+            runPomodoro(isRunning);
         }
         $(pomodoroSettings).animate({"opacity": "0"}, 100, function () {
             this.style.visibility = "hidden";
@@ -128,22 +114,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // increment timers in the settings menu when clicking the plus button
     Array.prototype.forEach.call(plusButton, function (el, i) {
         el.addEventListener("click", function () {
             if (parseInt(el.parentNode.childNodes[7].textContent) < 59)
                 el.parentNode.childNodes[7].textContent = (parseInt(el.parentNode.childNodes[7].textContent) + 1);
         });
     });
-
+    // decrement timers in the settings menu when clicking the minus button
     Array.prototype.forEach.call(minusButton, function (el, i) {
         el.addEventListener("click", function () {
             if (parseInt(el.parentNode.childNodes[7].textContent) > 1)
                 el.parentNode.childNodes[7].textContent = (parseInt(el.parentNode.childNodes[7].textContent) - 1);
         });
     });
-
+    // update pomodori lengths provided changes have been made
     okayButton.addEventListener("click", function () {
-        // update pomodori lengths (ONLY IF A CHANGE HAS BEEN MADE)
         if (parseInt(document.getElementById("pomodoro_length").textContent) * 60 !== pomodoroLength) {
             pomodoroLength = parseInt(document.getElementById("pomodoro_length").textContent) * 60;
             pomodoroTimeChanged = true;
@@ -167,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // if pomodoro time has been changed during pomodoro, reset timer with new time
             timeLeft = (pomodoroTimeChanged) ? pomodoroLength: timeLeft;
         }
-        // to account for the way setInterval works
+        // accounting for the way setInterval works
         if (!isRunning) {
             if (tookBreak && (timeLeft === shortBreakLength || timeLeft !== longBreakLength)) {
                 timeLeft++;
@@ -199,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 renderTime(convertToMinutes(timeLeft));
                 if (timeLeft-- === 0) {
                     clearInterval(countdownInterval);
-                    // TODO: send notification / tone
                     checkPomodoro();
                 }
             }, 1000)
@@ -211,36 +196,28 @@ document.addEventListener('DOMContentLoaded', function () {
     function checkPomodoro() {
         if (!tookBreak) { // time for a break
             generateNotification("You deserve a break.");
-            $(workDescription).animate({"opacity": "0"}, 200, function () {
-                this.textContent = "Take a break.";
-            }).animate({"opacity": "1"}, 200);
-
+            $(workDescription).animate({"opacity": "0"}, 200, function () {this.textContent = "Take a break.";}).animate({"opacity": "1"}, 200);
             tookBreak = true;
             document.getElementById("pomodoros_text").textContent = "pomodori: " + ++currentPomodoriCount;
-            if (currentPomodoriCount % pomodoriCycleCount === 0) {
-                timeLeft = longBreakLength; // take a long break
-            } else {
-                timeLeft = shortBreakLength; // take a short break
-            }
+            timeLeft = (currentPomodoriCount % pomodoriCycleCount === 0) ? longBreakLength : shortBreakLength;
         } else { // took a break, now back to work
             generateNotification("Let's get back to work.");
-            $(workDescription).animate({"opacity": "0"}, 200, function () {
-                this.textContent = "Get work done.";
-            }).animate({"opacity": "1"}, 200);
-
+            $(workDescription).animate({"opacity": "0"}, 200, function () {this.textContent = "Get work done.";}).animate({"opacity": "1"}, 200);
             timeLeft = pomodoroLength;
             tookBreak = false;
         }
         timeLeft--;
         runPomodoro(true);
     }
-
 });
 
 // create a notification with given body text
 function generateNotification(text) {
     if (Notification.permission === "granted") {
-        let notification = new Notification("Pomodoro Timer:", {body: text, icon: "http://res.cloudinary.com/detqxj5bf/image/upload/v1510792916/pomodoro/mini-tomato.png"});
+        let notification = new Notification("Pomodoro Timer:", {
+            body: text,
+            icon: "http://res.cloudinary.com/detqxj5bf/image/upload/v1510792916/pomodoro/mini-tomato.png"
+        });
         notification.onclick = function(event) {
             window.focus();
             notification.close();
