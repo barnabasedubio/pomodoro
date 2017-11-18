@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
         pomodoroTimeChanged  = false,
         breakTimeChanged     = false,
     // pomodoro variables
-        pomodoroLength       = 1500,
-        shortBreakLength     = 300,
-        longBreakLength      = 900,
+        pomodoroLength       = 15,
+        shortBreakLength     = 3,
+        longBreakLength      = 9,
         currentPomodoriCount = 0,
         pomodoriCycleCount   = 4,
         timeLeft             = pomodoroLength,
@@ -153,11 +153,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // if pomodoro time has been changed during pomodoro, reset timer with new time
             timeLeft = (pomodoroTimeChanged) ? pomodoroLength: timeLeft;
         }
-        // accounting for the way setInterval works
-        if (!isRunning) {
-            if (tookBreak && (timeLeft === shortBreakLength || timeLeft !== longBreakLength)) {
-                timeLeft++;
-            } else if (!tookBreak && timeLeft !== pomodoroLength) timeLeft++;
+        /* accounting for the way setInterval works
+            happens like this: decrement timeLeft --> wait 1 second --> display on screen
+         */
+        if ((tookBreak && !breakTimeChanged) || (!tookBreak && !pomodoroTimeChanged)) {
+            timeLeft = (document.getElementById("main_text").textContent !== convertToMinutes(timeLeft)) ? convertFromMinutes(document.getElementById("main_text").textContent) : timeLeft
         }
         renderTime(convertToMinutes(timeLeft));
 
@@ -249,4 +249,7 @@ function convertToMinutes(seconds) {
         minuteString = minuteStringMinute + ":" + minuteStringSecond;
     }
     return minuteString;
+}
+function convertFromMinutes(time) {
+    return parseInt(time.split(":")[0] * 60) + parseInt(time.split(":")[1]);
 }
