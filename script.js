@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
         pomodoroTimeChanged  = false,
         breakTimeChanged     = false,
     // pomodoro variables
-        pomodoroLength       = 15,
-        shortBreakLength     = 3,
-        longBreakLength      = 9,
+        pomodoroLength       = 1500,
+        shortBreakLength     = 300,
+        longBreakLength      = 900,
         currentPomodoriCount = 0,
         pomodoriCycleCount   = 4,
         timeLeft             = pomodoroLength,
