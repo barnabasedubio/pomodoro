@@ -5,54 +5,38 @@ html {
     overflow: hidden;
 }
 
-h1 {
-     font: 5rem "Tw Cen MT", sans-serif;
-     color: #FF6363;
-     background: inherit;
- }
-
-h2 {
-    font: 4rem "Tw Cen MT", sans-serif;
+h1, h2 {
     color: #FF6363;
     background: inherit;
 }
 
-h3 {
-    font: 2rem "Microsoft Yi Baiti", sans-serif;
-    color: #985A5A;
+h1 {  font: 5rem "Tw Cen MT", sans-serif;  }
+h2 {  font: 4rem "Tw Cen MT", sans-serif;  }
+h3 {  font: 2rem "Microsoft Yi Baiti", sans-serif;  }
+h3, p, .button, .plus-button, .minus-button, .after-text {  color: #985A5A;  }
+p, .after-text {  font: 1.5rem "Microsoft Yi Baiti", sans-serif;  }
+
+#work_description, #main_text, #pomodoros_text .page-description,
+.settings, .button-okay, .settings-box,
+.box, .plus-button, .minus-button, .after-text {
+    position: relative;
 }
 
-p, .after-text {
-    font: 1.5rem "Microsoft Yi Baiti", sans-serif;
-    color: #985A5A;
-}
+#work_description, #pomodoros_text {  color: #FF6363;  }
+#work_description, #pomodoros_text, .button-okay, .settings, .settings-box {  opacity: 0;  }
+#work_description {  bottom: 7rem;  }
 
 .container {
-    margin: 15rem auto;
-    text-align: center;
+margin: 15rem auto;
+text-align: center;
 }
 
-#work_description {
-    opacity: 0;
-    color: #FF6363;
-    position: relative;
-    bottom: 7rem;
-}
-
-#main_text {
-    position: relative;
-}
-
-.page-description {
-    position: relative;
-    bottom: 3rem;
-}
+.page-description {  bottom: 3rem;  }
 
 .button {
     outline: none;
     transition-duration: 0.4s;
     font: 2rem "Microsoft Yi Baiti", sans-serif;
-    color: #985A5A;
     background-color: inherit;
     width: 11rem;
     height: 3rem;
@@ -60,38 +44,32 @@ p, .after-text {
     border-radius: 10rem;
     padding-bottom: 0.4rem;
 }
+
 .button:hover {
     color: #DDD;
     background: rgba(255, 99, 99, 0.5);
 }
 
-
 .settings {
-    position: relative;
     display: none;
     margin: 0 2rem;
     border: none;
-    opacity: 0;
 }
 
 .button-okay {
     visibility: hidden;
     margin: auto;
-    position: relative;
     bottom: 19rem;
     display: block;
     border: none;
-    opacity: 0;
 }
 
 .settings-box {
     height: 20rem;
     width: 25rem;
-    position: relative;
     margin: 0 auto;
     bottom: 20rem;
     visibility: hidden;
-    opacity: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -100,41 +78,29 @@ p, .after-text {
 
 .settings-time {
     width: 60%;
-    /*border: 1px dashed blue;*/
     position: absolute;
     top: -1rem;
     left: 1.75rem;
 }
 
 .box {
-    /*border: 1px solid red;*/
     height: 9rem;
     width: 9rem;
-    position: relative;
 }
 
 .plus-button, .minus-button {
     height: 4rem;
     background-color: inherit;
     font: 3rem "Microsoft Yi Baiti", sans-serif;
-    color: #985A5A;
     outline: none;
     border: transparent;
     padding-bottom: 1rem;
     cursor: pointer;
 }
 
-.minus-button {
-    position: relative;
-    top: 2.45rem;
-    right: 2rem;
-}
-
-.plus-button {
-    position: relative;
-    top: 2.45rem;
-    left: 2rem;
-}
+.minus-button, .plus-button {  top: 2.45rem;  }
+.minus-button {  right: 2rem;  }
+.plus-button {  left: 2rem;  }
 
 .box p {
     position: absolute;
@@ -143,14 +109,10 @@ p, .after-text {
     margin: 0 auto;
 }
 
-.after-text {
-    position: relative;
-    bottom: 3.67rem;
-}
+.after-text {  bottom: 3.67rem;  }
+#pomodoros_text {  display: none;  }
 
-#pomodoros_text {
-    color: #FF6363;
-    position: relative;
-    opacity: 0;
-    display: none; /*change to inline-block when active */
+.created_by {
+    position: absolute;
+    margin: 0 auto;
 }
