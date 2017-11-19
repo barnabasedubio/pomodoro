@@ -152,5 +152,5 @@ p, .after-text {
     color: #FF6363;
     position: relative;
     opacity: 0;
-    display: none; /*change to inline-block when active */
+    display: none;
 }
