@@ -1,12 +1,12 @@
 
 html {
     height: 100%;
-    background: linear-gradient(to bottom, #F3E1C8, #BB4646);
+    background: linear-gradient(to bottom, #E4EBF1, #7D90F0);
     overflow: hidden;
 }
 
 h1, h2 {
-    color: #FF6363;
+    color: #039EAF;
     background: inherit;
 }
 
@@ -14,7 +14,8 @@ h1 {  font: 5rem "Tw Cen MT", sans-serif;  }
 h2 {  font: 4rem "Tw Cen MT", sans-serif;  }
 h3 {  font: 2rem "Microsoft Yi Baiti", sans-serif;  }
 p, .after-text {  font: 1.5rem "Microsoft Yi Baiti", sans-serif;  }
-h3, p, .button, .plus-button, .minus-button, .after-text {  color: #985A5A;  }
+h3, p, .button, .plus-button, .minus-button, .after-text {  color: #023B42;  }
+
 
 #work_description, #main_text, #pomodoros_text, .page-description,
 .settings, .button-okay, .settings-box,
@@ -22,7 +23,7 @@ h3, p, .button, .plus-button, .minus-button, .after-text {  color: #985A5A;  }
     position: relative;
 }
 
-#work_description, #pomodoros_text {  color: #FF6363;  }
+#work_description, #pomodoros_text {  color: #039EAF;  }
 #work_description, #pomodoros_text, .button-okay, .settings, .settings-box {  opacity: 0;  }
 #work_description {  bottom: 7rem;  }
 
@@ -40,14 +41,14 @@ text-align: center;
     background-color: inherit;
     width: 11rem;
     height: 3rem;
-    border: 0.2rem solid #FF6363;
+    border: 0.2rem solid #039EAF;
     border-radius: 10rem;
     padding-bottom: 0.4rem;
 }
 
 .button:hover {
     color: #DDD;
-    background: rgba(255, 99, 99, 0.5);
+    background: #039EAF;
 }
 
 .settings {
@@ -61,7 +62,6 @@ text-align: center;
     margin: auto;
     bottom: 19rem;
     display: block;
-    border: none;
 }
 
 .settings-box {
