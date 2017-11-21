@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
         countdownInterval,
         isRunning = false;
 
+    let audio = new Audio("notification.mp3");
+
     // animations
     function renderPage() {
         // animations
@@ -195,12 +197,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function checkPomodoro() {
         if (!tookBreak) { // time for a break
+            audio.play();
             generateNotification("You deserve a break.");
             $(workDescription).animate({"opacity": "0"}, 200, function () {this.textContent = "Take a break.";}).animate({"opacity": "1"}, 200);
             tookBreak = true;
             document.getElementById("pomodoros_text").textContent = "pomodori: " + ++currentPomodoriCount;
             timeLeft = (currentPomodoriCount % pomodoriCycleCount === 0) ? longBreakLength : shortBreakLength;
         } else { // took a break, now back to work
+            audio.play();
             generateNotification("Let's get back to work.");
             $(workDescription).animate({"opacity": "0"}, 200, function () {this.textContent = "Get work done.";}).animate({"opacity": "1"}, 200);
             timeLeft = pomodoroLength;
