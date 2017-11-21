@@ -44,6 +44,7 @@ text-align: center;
     border: 0.2rem solid #039EAF;
     border-radius: 10rem;
     padding-bottom: 0.4rem;
+    cursor: pointer;
 }
 
 .button:hover {
