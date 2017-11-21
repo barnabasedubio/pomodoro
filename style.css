@@ -47,6 +47,8 @@ text-align: center;
     cursor: pointer;
 }
 
+.button::-moz-focus-inner, .plus-button::-moz-focus-inner, .minus-button::-moz-focus-inner {  border: 0;  }
+
 .button:hover {
     color: #DDD;
     background: #039EAF;
