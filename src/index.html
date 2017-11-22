@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <title>Online Pomodoro Timer</title>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+        <h3 id="work_description">Get work done.</h3>
+        <h1 id="main_text">Pomodoro Timer</h1>
+        <h3 id="pomodoros_text">pomodori: 0</h3>
+
+        <button id="pause_resume" class="button settings">start</button>
+        <button id="general_settings" class="button settings">settings</button>
+        <button id="reset" class="button settings">reset</button>
+
+        <h3 class="page-description">Minimize distractions and maximize your work output</h3>
+        <button id="lets_go" class="button">get started</button>
+
+        <div id="pomodoro_settings" class="settings-box">
+            <div id="focus_setting" class="box">
+                <p>focus</p>
+                <button class="minus-button">-</button>
+                <button class="plus-button">+</button>
+                <h2 id="pomodoro_length" class="settings-time">25</h2>
+            </div>
+
+            <div id="short_break_setting" class="box">
+                <p>break</p>
+                <button class="minus-button">-</button>
+                <button class="plus-button">+</button>
+                <h2 id="short_break_length" class="settings-time">5</h2>
+            </div>
+
+            <div id="long_break_setting" class="box">
+                <p>long break</p>
+                <button class="minus-button">-</button>
+                <button class="plus-button">+</button>
+                <h2 id="long_break_length" class="settings-time">15</h2>
+            </div>
+
+            <span class="after-text">after</span>
+
+            <div id="after_pomodoros_setting" class="box">
+                <p>pomodori</p>
+                <button class="minus-button">-</button>
+                <button class="plus-button">+</button>
+                <h2 id="pomodoro_cycle_length" class="settings-time">4</h2>
+            </div>
+        </div>
+        <button id="okay" class="button button-okay">okay</button>
+    </div>
+</body>
+
+</html>

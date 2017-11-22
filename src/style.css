@@ -1,0 +1,121 @@
+
+html {
+    height: 100%;
+    background: linear-gradient(to bottom, #E4EBF1, #7D90F0);
+    overflow: hidden;
+}
+
+h1, h2 {
+    color: #039EAF;
+    background: inherit;
+}
+
+h1 {  font: 5rem "Tw Cen MT", sans-serif;  }
+h2 {  font: 4rem "Tw Cen MT", sans-serif;  }
+h3 {  font: 2rem "Microsoft Yi Baiti", sans-serif;  }
+p, .after-text {  font: 1.5rem "Microsoft Yi Baiti", sans-serif;  }
+h3, p, .button, .plus-button, .minus-button, .after-text {  color: #023B42;  }
+
+
+#work_description, #main_text, #pomodoros_text, .page-description,
+.settings, .button-okay, .settings-box,
+.box, .plus-button, .minus-button, .after-text {
+    position: relative;
+}
+
+#work_description, #pomodoros_text {  color: #039EAF;  }
+#work_description, #pomodoros_text, .button-okay, .settings, .settings-box {  opacity: 0;  }
+#work_description {  bottom: 7rem;  }
+
+.container {
+margin: 15rem auto;
+text-align: center;
+}
+
+.page-description {  bottom: 3rem;  }
+
+.button {
+    outline: none;
+    transition-duration: 0.4s;
+    font: 2rem "Microsoft Yi Baiti", sans-serif;
+    background-color: inherit;
+    width: 11rem;
+    height: 3rem;
+    border: 0.2rem solid #039EAF;
+    border-radius: 10rem;
+    padding-bottom: 0.4rem;
+    cursor: pointer;
+}
+
+.button::-moz-focus-inner, .plus-button::-moz-focus-inner, .minus-button::-moz-focus-inner {  border: 0;  }
+
+.button:hover {
+    color: #DDD;
+    background: #039EAF;
+}
+
+.settings {
+    display: none;
+    margin: 0 2rem;
+    border: none;
+}
+
+.button-okay {
+    visibility: hidden;
+    margin: auto;
+    bottom: 19rem;
+    display: block;
+}
+
+.settings-box {
+    height: 20rem;
+    width: 25rem;
+    margin: 0 auto;
+    bottom: 20rem;
+    visibility: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-time {
+    width: 60%;
+    position: absolute;
+    top: -1rem;
+    left: 1.75rem;
+}
+
+.box {
+    height: 9rem;
+    width: 9rem;
+}
+
+.plus-button, .minus-button {
+    height: 4rem;
+    background-color: inherit;
+    font: 3rem "Microsoft Yi Baiti", sans-serif;
+    outline: none;
+    border: transparent;
+    padding-bottom: 1rem;
+    cursor: pointer;
+}
+
+.minus-button, .plus-button {  top: 2.45rem;  }
+.minus-button {  right: 2rem;  }
+.plus-button {  left: 2rem;  }
+
+.box p {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.after-text {  bottom: 3.67rem;  }
+#pomodoros_text {  display: none;  }
+
+.created_by {
+    position: absolute;
+    margin: 0 auto;
+}
