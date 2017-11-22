@@ -1,4 +1,4 @@
-# Pomodoro Timer
+# [Pomodoro Timer](https://barnabasedubio.github.io/pomodoro)
 Minimalistic, fully customizable, online pomodoro timer
 ## Getting Started
 
