@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         countdownInterval,
         isRunning = false;
 
-    let audio = new Audio("/notification.mp3");
+    let audio = new Audio("notification.mp3");
 
     // animations
     function renderPage() {
